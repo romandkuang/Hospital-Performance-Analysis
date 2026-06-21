@@ -116,13 +116,15 @@ This page identifies patients with 30-day return encounters and shows how return
 
 **Impact:** Zero-coverage claims represent a disproportionate share of total claim value and should be treated as a revenue-cycle priority.
 
-### 3. Procedure volume and procedure cost tell different stories
+### 3. 30-day return activity is concentrated among a small patient group
 
-**Observation:** The most frequent procedures were not necessarily the most expensive procedures. Procedure-volume analysis identifies operational workload, while average-cost analysis identifies financial intensity.
+**Observation:** 771 patients had a qualifying 30-day return encounter, producing 16,595 total 30-day return events. The top 10 patients generated 5,664 events, or 34.1% of all return events.
 
-**Business Context:** A procedure performed frequently may strain staffing and scheduling resources, while a high-cost procedure may create financial risk even when performed less often.
+**Business Context:** Repeat utilization is not evenly distributed across the patient population. A limited group of patients is responsible for a disproportionate share of return activity.
 
-**Impact:** Procedure management should evaluate both frequency and average base cost. High-volume procedures support capacity planning, while high-cost procedures require financial and utilization review.
+**Impact:** Targeted care coordination, discharge follow-up, and case-management workflows could reduce avoidable repeat utilization more efficiently than broad interventions applied across the entire patient population.
+
+![Patient Behavior](images/patient_behavior.png)
 
 ### 4. 30-day return activity is concentrated among a small patient group
 
