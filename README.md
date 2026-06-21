@@ -1,8 +1,8 @@
 Massachusetts General Hospital Operations & Financial Performance Analysis
 
-"SQL" (https://img.shields.io/badge/SQL-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
-"Power BI" (https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square&logo=powerbi&logoColor=black)
-"Healthcare Analytics" (https://img.shields.io/badge/Healthcare-Analytics-0B5CAD?style=flat-square)
+ (https://img.shields.io/badge/SQL-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+ (https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square&logo=powerbi&logoColor=black)
+ (https://img.shields.io/badge/Healthcare-Analytics-0B5CAD?style=flat-square)
 
 ---
 
