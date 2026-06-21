@@ -1,193 +1,241 @@
-# Massachusetts General Hospital Operations & Financial Performance Analysis
+Massachusetts General Hospital Operations & Financial Performance Analysis
 
-![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=flat-square\&logo=mysql\&logoColor=white)
-![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square\&logo=powerbi\&logoColor=black)
-![Healthcare Analytics](https://img.shields.io/badge/Healthcare-Analytics-0B5CAD?style=flat-square)
-
-## Background and Overview
-
-Hospital leadership needs reliable visibility into patient demand, service utilization, payer coverage, procedure cost, and repeat utilization to make informed operational and financial decisions.
-
-This project analyzes synthetic hospital records modeled for Massachusetts General Hospital. The objective is to evaluate encounter patterns, payer coverage, procedure activity, claim costs, and 30-day return behavior to identify opportunities for better capacity planning, revenue-cycle control, and care coordination.
-
-The analysis was completed using **MySQL** for data exploration and business-question validation and **Power BI** for dashboard development. The final report is designed for hospital operations and finance stakeholders who need a concise view of performance trends and business risk.
-
-### Business Questions
-
-* How has encounter volume changed over time?
-* Which encounter classes account for most hospital activity?
-* What share of encounters are completed within 24 hours?
-* How much financial exposure is associated with zero payer coverage?
-* Which procedures are most frequent and which carry the highest average base cost?
-* Which patients account for the largest share of 30-day return events?
+"SQL" (https://img.shields.io/badge/SQL-MySQL-4479A1?style=flat-square&logo=mysql&logoColor=white)
+"Power BI" (https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square&logo=powerbi&logoColor=black)
+"Healthcare Analytics" (https://img.shields.io/badge/Healthcare-Analytics-0B5CAD?style=flat-square)
 
 ---
 
-## Executive Summary
+Executive Overview
 
-The hospital recorded **27,891 total encounters** across **974 unique patients**, with activity concentrated in short-duration care. **80.7% of encounters came from ambulatory, outpatient, and urgent-care services**, while **95.9% of encounters lasted less than 24 hours**, showing that operational demand is driven primarily by high-volume, short-stay services.
+Healthcare organizations must balance patient demand, operational efficiency, and financial sustainability while delivering quality care. Hospital leadership requires visibility into utilization patterns, payer performance, procedure costs, and repeat patient activity to make informed operational and financial decisions.
 
-Financial exposure was also meaningful: **13,586 encounters had zero payer coverage**, representing **48.7% of all encounters**. These zero-coverage encounters accounted for approximately **$63.1M in claim value**, or **62.2% of total claim value**, indicating a substantial revenue-cycle risk.
+This project analyzes synthetic healthcare data modeled after Massachusetts General Hospital to evaluate encounter volume, service utilization, payer coverage, claim exposure, procedure activity, and patient return behavior.
 
-The patient behavior analysis identified **771 patients with a 30-day return encounter** and **16,595 total 30-day return events**. The top 10 patients accounted for **5,664 return events**, or **34.1% of all return events**, highlighting a concentrated opportunity for targeted care coordination.
+Using MySQL and Power BI, I developed an analytics solution designed to help hospital operations and finance leaders identify performance trends, revenue-cycle risk, and opportunities for targeted intervention.
 
-![Executive Overview](images/executive_overview.png)
+Stakeholders
 
----
+- Director of Hospital Operations
+- Revenue Cycle Leadership
+- Finance and Budget Teams
+- Care Coordination Teams
 
-## Data Structure Overview
+Business Objectives
 
-The dataset contains five primary tables used for analysis, plus one derived table exported from SQL for 30-day return-event reporting.
-
-| Table                  | Purpose                                                                                                 |
-| ---------------------- | ------------------------------------------------------------------------------------------------------- |
-| `encounters`           | Encounter dates, encounter class, claim cost, payer coverage, patient ID, payer ID, and organization ID |
-| `patients`             | Patient demographic and geographic attributes                                                           |
-| `payers`               | Insurance payer information                                                                             |
-| `procedures`           | Procedure descriptions, procedure codes, base costs, and encounter linkage                              |
-| `organizations`        | Hospital organization information                                                                       |
-| `patient_readmissions` | Derived SQL output showing each patient's number of 30-day return events                                |
-
-The `encounters` table is the central fact table. It connects patients, payers, organizations, and procedures, allowing the analysis to evaluate utilization, financial exposure, and patient behavior across the hospital system.
-
-![Data Model](images/data_model.png)
-
-### Entity Relationship Summary
-
-```text
-patients[Id]          -> encounters[PATIENT]
-payers[Id]            -> encounters[PAYER]
-organizations[Id]     -> encounters[ORGANIZATION]
-encounters[Id]        -> procedures[ENCOUNTER]
-patients[Id]          -> patient_readmissions[PATIENT]
-```
+- Understand drivers of patient demand
+- Identify financial exposure associated with payer coverage gaps
+- Evaluate procedure utilization and cost patterns
+- Analyze repeat utilization behavior
+- Support operational planning and resource allocation
 
 ---
 
-## Insights Deep Dive
+Business Questions
 
-### 1. Short-duration services drive most hospital activity
+Utilization & Operations
 
-**Observation:** Ambulatory, outpatient, and urgent-care services accounted for **80.7% of total encounters**. In addition, **95.9% of encounters lasted less than 24 hours**.
+- How has encounter volume changed over time?
+- Which encounter classes generate the highest operational demand?
+- What percentage of encounters are completed within 24 hours?
 
-**Business Context:** The hospital's operational workload is driven less by long inpatient stays and more by high-volume, short-duration encounters. This means throughput, registration speed, room turnover, and scheduling efficiency are central to operational performance.
+Financial Performance
 
-**Impact:** Improving patient flow across ambulatory, outpatient, and urgent-care settings would affect the largest share of hospital activity.
+- How much claim value is associated with zero payer coverage?
+- Which procedures generate the highest average costs?
+- Where is the organization most exposed to reimbursement risk?
 
-![Encounter Trends](images/encounter_trends.png)
+Patient Utilization
 
----
-
-### 2. Zero payer coverage creates substantial financial exposure
-
-**Observation:** **13,586 encounters** had zero payer coverage, representing **48.7% of all encounters**. These encounters accounted for approximately **$63.1M**, or **62.2% of total claim value**.
-
-**Business Context:** Encounters without recorded coverage can increase reimbursement risk, delay collections, and create additional administrative workload for billing and patient financial services teams.
-
-**Impact:** Zero-coverage claims represent a disproportionate share of total claim value and should be treated as a revenue-cycle priority. Procedure analysis also helps separate high-volume operational workload from high-cost financial intensity.
-
-![Cost and Procedure Performance](images/cost_procedure_performance.png)
+- Which patients account for the highest volume of 30-day return activity?
+- How concentrated is repeat utilization across the patient population?
 
 ---
 
-### 3. 30-day return activity is concentrated among a small patient group
+Executive Summary
 
-**Observation:** **771 patients** had a qualifying 30-day return encounter, producing **16,595 total 30-day return events**. The top 10 patients generated **5,664 events**, or **34.1%** of all return events.
+Analysis of 27,891 encounters across 974 unique patients revealed that hospital activity is heavily concentrated in short-duration care settings.
 
-**Business Context:** Repeat utilization is not evenly distributed across the patient population. A limited group of patients is responsible for a disproportionate share of return activity.
+Key Findings
 
-**Impact:** Targeted care coordination, discharge follow-up, and case-management workflows could reduce avoidable repeat utilization more efficiently than broad interventions applied across the entire patient population.
+High-Volume Services Drive Operational Demand
 
-![Patient Behavior](images/patient_behavior.png)
+- Ambulatory, outpatient, and urgent-care services represented 80.7% of all encounters.
+- 95.9% of encounters were completed within 24 hours.
 
----
+These findings suggest that patient throughput, scheduling efficiency, registration workflows, and room turnover are primary operational drivers.
 
-## Recommendations
+Payer Coverage Gaps Create Significant Financial Exposure
 
-### 1. Prioritize staffing and workflow improvements in short-duration care settings
+- 13,586 encounters had zero payer coverage.
+- These encounters represented 48.7% of all encounters.
+- Zero-coverage encounters accounted for approximately $63.1 million in claim value.
+- This represented 62.2% of total claim value analyzed.
 
-Because **80.7% of encounters** came from ambulatory, outpatient, and urgent-care services, hospital operations should focus improvement efforts on these high-volume areas. Leadership should review appointment scheduling, registration throughput, room turnover, and discharge processes to reduce bottlenecks.
+This indicates that reimbursement risk is concentrated among encounters lacking recorded payer coverage and may warrant additional eligibility verification and financial-assistance processes.
 
-### 2. Strengthen payer verification and financial-assistance workflows
+Repeat Utilization Is Highly Concentrated
 
-Zero-coverage encounters represented **62.2% of total claim value**, making payer verification a material financial-control opportunity. The hospital should implement eligibility checks earlier in the encounter process and flag high-value zero-coverage claims for immediate review.
+- 771 patients experienced a qualifying 30-day return encounter.
+- These patients generated 16,595 total return events.
+- The top 10 patients accounted for 34.1% of all return activity.
 
-### 3. Monitor high-cost and high-volume procedures separately
+This concentration suggests that targeted care coordination programs may be more effective than broad population-wide interventions.
 
-Procedure-volume and average-cost visuals should be reviewed together. High-volume procedures should inform staffing and capacity planning, while high-cost procedures should be monitored for utilization appropriateness and financial exposure.
-
-### 4. Build a targeted care-management workflow for high-utilization patients
-
-The top 10 patients accounted for **34.1% of 30-day return events**. These patients should be prioritized for follow-up scheduling, medication review, discharge outreach, and case-management support.
-
----
-
-## Caveats and Assumptions
-
-* The dataset is synthetic and was generated through Synthea; it does not represent actual Massachusetts General Hospital patient records.
-* The 30-day return metric follows the project-defined SQL logic and should not be interpreted as a formal CMS inpatient readmission measure.
-* The return-event calculation identifies subsequent encounters within 30 days of a previous encounter; additional clinical review would be needed to determine preventability.
-* The 2022 data is incomplete and only includes activity through early February, so it should not be compared directly against complete calendar years.
-* Claim costs represent recorded claim values in the dataset and do not include final reimbursement, contractual adjustments, denials, or collections.
-* The `patient_readmissions` table was created by exporting SQL CTE results into a CSV so the result could be visualized in Power BI.
+"Executive Overview" (images/executive_overview.png)
 
 ---
 
-## Tools Used
+Data Architecture
 
-* **MySQL:** Data validation, aggregations, joins, CTEs, window functions, and business-question analysis
-* **Power BI:** Data modeling, KPI development, dashboard design, slicers, drilldown visuals, and stakeholder reporting
-* **Power Query:** Data typing and calculated helper fields
-* **CSV:** Source-data storage and SQL result export
+Data Sources
 
----
+Table| Description
+encounters| Encounter activity, claim costs, payer coverage, encounter class
+patients| Demographic and geographic patient information
+payers| Insurance payer information
+procedures| Procedure descriptions and base costs
+organizations| Hospital organization information
+patient_readmissions| Derived table identifying 30-day return activity
 
-## Key SQL Techniques Used
+Data Model
 
-* `GROUP BY` aggregations
-* `CASE WHEN` conditional logic
-* percentage calculations
-* `TIMESTAMPDIFF()` for encounter duration
-* payer and encounter joins
-* CTEs
-* `LEAD()` window function for next-encounter analysis
-* Top N analysis
+The encounters table serves as the central fact table connecting patients, payers, procedures, and organizations.
 
----
+"Data Model" (images/data_model.png)
 
-## Repository Structure
+Entity Relationships
 
-```text
-hospital-performance-analysis/
-|
-├── README.md
-|
-├── data/
-|   ├── encounters.csv
-|   ├── patients.csv
-|   ├── payers.csv
-|   ├── procedures.csv
-|   ├── organizations.csv
-|   └── patient_readmissions.csv
-|
-├── sql/
-|   └── hospital_analytics_queries.sql
-|
-├── dashboard/
-|   └── hospital_performance_dashboard.pbix
-|
-└── images/
-    ├── executive_overview.png
-    ├── data_model.png
-    ├── encounter_trends.png
-    ├── cost_procedure_performance.png
-    └── patient_behavior.png
-```
+patients[Id] → encounters[PATIENT]
+
+payers[Id] → encounters[PAYER]
+
+organizations[Id] → encounters[ORGANIZATION]
+
+encounters[Id] → procedures[ENCOUNTER]
+
+patients[Id] → patient_readmissions[PATIENT]
 
 ---
 
-## Data Source
+Analytical Insights
 
-The dataset was provided through the Maven Analytics Hospital Analytics project and generated using Synthea, an open-source synthetic patient generator.
+1. Operational Demand Is Concentrated in Short-Stay Services
 
-**Reference:** Walonoski, J., Kramer, M., Nichols, J., et al. (2018). *Synthea: An approach, method, and software mechanism for generating synthetic patients and the synthetic electronic health care record*. Journal of the American Medical Informatics Association, 25(3), 230–238.
+Ambulatory, outpatient, and urgent-care encounters account for over four-fifths of total hospital activity.
+
+Operational Implication
+
+Performance improvements in patient flow, registration efficiency, scheduling, and discharge workflows will impact the majority of patient encounters.
+
+"Encounter Trends" (images/encounter_trends.png)
+
+---
+
+2. Revenue-Cycle Risk Is Concentrated in Zero-Coverage Encounters
+
+Nearly half of all encounters lacked payer coverage and represented over $63 million in claim value.
+
+Financial Implication
+
+Improving payer verification and eligibility workflows could reduce reimbursement risk and improve revenue-cycle performance.
+
+"Cost and Procedure Performance" (images/cost_procedure_performance.png)
+
+---
+
+3. Repeat Utilization Is Driven by a Small Patient Population
+
+Return activity is heavily concentrated among a limited number of patients.
+
+Operational Implication
+
+Care-management resources can be deployed more effectively by prioritizing high-utilization patients rather than applying broad interventions across the entire population.
+
+"Patient Behavior" (images/patient_behavior.png)
+
+---
+
+Recommendations
+
+1. Optimize High-Volume Care Settings
+
+Focus operational improvement initiatives on ambulatory, outpatient, and urgent-care workflows where the majority of patient demand occurs.
+
+2. Strengthen Revenue-Cycle Controls
+
+Implement earlier payer eligibility verification and proactively review high-value encounters lacking recorded coverage.
+
+3. Separate Capacity Planning From Cost Monitoring
+
+Monitor high-volume procedures for staffing and scheduling decisions while evaluating high-cost procedures for financial exposure and utilization management.
+
+4. Develop High-Utilization Patient Programs
+
+Prioritize follow-up care, discharge outreach, and case-management support for patients demonstrating frequent return activity.
+
+---
+
+Technical Approach
+
+SQL
+
+- Data validation
+- Multi-table joins
+- Aggregations
+- Common Table Expressions (CTEs)
+- Window functions
+- Business metric calculations
+
+Power BI
+
+- Interactive dashboards
+- KPI development
+- Data modeling
+- Drill-through analysis
+- Executive reporting
+
+Power Query
+
+- Data transformation
+- Data typing
+- Helper field creation
+
+---
+
+Key SQL Techniques
+
+- GROUP BY
+- CASE WHEN
+- CTEs
+- LEAD()
+- Window functions
+- TIMESTAMPDIFF()
+- Percentage calculations
+- Top-N analysis
+
+---
+
+Tools
+
+- MySQL
+- Power BI
+- Power Query
+- CSV Data Sources
+
+---
+
+Caveats
+
+- Data was generated using Synthea and does not represent actual Massachusetts General Hospital patient records.
+- Results should be interpreted as an analytical case study rather than a clinical performance evaluation.
+- The 30-day return metric reflects project-defined business logic and is not equivalent to CMS readmission methodology.
+- Claim costs represent recorded claim values and do not reflect final reimbursement outcomes.
+
+---
+
+Data Source
+
+This project uses synthetic healthcare data generated using Synthea and provided through the Maven Analytics Hospital Analytics project.
+
+Walonoski, J., Kramer, M., Nichols, J., et al. (2018). Synthea: An approach, method, and software mechanism for generating synthetic patients and synthetic electronic health records. Journal of the American Medical Informatics Association, 25(3), 230–238.
