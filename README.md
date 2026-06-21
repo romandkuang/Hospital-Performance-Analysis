@@ -10,7 +10,7 @@ Hospital leadership needs reliable visibility into patient demand, service utili
 
 This project analyzes synthetic hospital records modeled for Massachusetts General Hospital. The objective is to evaluate encounter patterns, payer coverage, procedure activity, claim costs, and 30-day return behavior to identify opportunities for better capacity planning, revenue-cycle control, and care coordination.
 
-The analysis was completed using **MySQL** for data exploration and business-question validation, and **Power BI** for dashboard development. The final report is designed for hospital operations and finance stakeholders who need a concise view of performance trends and business risk.
+The analysis was completed using **MySQL** for data exploration and business-question validation and **Power BI** for dashboard development. The final report is designed for hospital operations and finance stakeholders who need a concise view of performance trends and business risk.
 
 ### Business Questions
 
@@ -20,6 +20,18 @@ The analysis was completed using **MySQL** for data exploration and business-que
 * How much financial exposure is associated with zero payer coverage?
 * Which procedures are most frequent and which carry the highest average base cost?
 * Which patients account for the largest share of 30-day return events?
+
+---
+
+## Executive Summary
+
+The hospital recorded **27,891 total encounters** across **974 unique patients**, with activity concentrated in short-duration care. **80.7% of encounters came from ambulatory, outpatient, and urgent-care services**, while **95.9% of encounters lasted less than 24 hours**, showing that operational demand is driven primarily by high-volume, short-stay services.
+
+Financial exposure was also meaningful: **13,586 encounters had zero payer coverage**, representing **48.7% of all encounters**. These zero-coverage encounters accounted for approximately **$63.1M in claim value**, or **62.2% of total claim value**, indicating a substantial revenue-cycle risk.
+
+The patient behavior analysis identified **771 patients with a 30-day return encounter** and **16,595 total 30-day return events**. The top 10 patients accounted for **5,664 return events**, or **34.1% of all return events**, highlighting a concentrated opportunity for targeted care coordination.
+
+![Executive Overview](images/executive_overview.png)
 
 ---
 
@@ -38,63 +50,17 @@ The dataset contains five primary tables used for analysis, plus one derived tab
 
 The `encounters` table is the central fact table. It connects patients, payers, organizations, and procedures, allowing the analysis to evaluate utilization, financial exposure, and patient behavior across the hospital system.
 
-### Entity Relationship Diagram
+![Data Model](images/data_model.png)
 
-```mermaid
-erDiagram
-    PATIENTS ||--o{ ENCOUNTERS : has
-    PAYERS ||--o{ ENCOUNTERS : covers
-    ORGANIZATIONS ||--o{ ENCOUNTERS : manages
-    ENCOUNTERS ||--o{ PROCEDURES : includes
-    PATIENTS ||--o{ PATIENT_READMISSIONS : has
+### Entity Relationship Summary
+
+```text
+patients[Id]          -> encounters[PATIENT]
+payers[Id]            -> encounters[PAYER]
+organizations[Id]     -> encounters[ORGANIZATION]
+encounters[Id]        -> procedures[ENCOUNTER]
+patients[Id]          -> patient_readmissions[PATIENT]
 ```
-
----
-
-## Executive Summary
-
-The hospital recorded **27,891 total encounters** across **974 unique patients**, with activity concentrated in short-duration care. **80.7% of encounters came from ambulatory, outpatient, and urgent-care services**, while **95.9% of encounters lasted less than 24 hours**, showing that operational demand is driven primarily by high-volume, short-stay services.
-
-Financial exposure was also meaningful: **13,586 encounters had zero payer coverage**, representing **48.7% of all encounters**. These zero-coverage encounters accounted for approximately **$63.1M in claim value**, or **62.2% of total claim value**, indicating a substantial revenue-cycle risk.
-
-The patient behavior analysis identified **771 patients with a 30-day return encounter** and **16,595 total 30-day return events**. The top 10 patients accounted for **5,664 return events**, or **34.1% of all return events**, highlighting a concentrated opportunity for targeted care coordination.
-
----
-
-## Dashboard Overview
-
-The Power BI report contains four pages:
-
-1. **Executive Overview** — high-level KPIs and core operational summary
-2. **Encounter Trends** — encounter mix, service-class demand, and visit-duration trends
-3. **Cost & Procedure Performance** — payer cost patterns, coverage risk, and procedure economics
-4. **Patient Behavior** — patient volume trends and 30-day return-event concentration
-
-> Add exported Power BI screenshots to the `/images` folder and update the image paths below.
-
-### Executive Overview
-
-![Executive Overview](images/executive_overview.png)
-
-This page provides a stakeholder-ready summary of encounter volume, patient count, service-class concentration, visit duration, and zero payer coverage.
-
-### Encounter Trends
-
-![Encounter Trends](images/encounter_trends.png)
-
-This page evaluates how encounter volume and service mix changed over time. It highlights that most encounters were short-duration and concentrated in ambulatory, outpatient, and urgent-care services.
-
-### Cost & Procedure Performance
-
-![Cost & Procedure Performance](images/cost_procedure_performance.png)
-
-This page focuses on claim value, payer coverage, average claim cost by payer, and procedure-level volume and cost patterns.
-
-### Patient Behavior
-
-![Patient Behavior](images/patient_behavior.png)
-
-This page identifies patients with 30-day return encounters and shows how return events are concentrated among a small group of high-utilization patients.
 
 ---
 
@@ -108,31 +74,31 @@ This page identifies patients with 30-day return encounters and shows how return
 
 **Impact:** Improving patient flow across ambulatory, outpatient, and urgent-care settings would affect the largest share of hospital activity.
 
+![Encounter Trends](images/encounter_trends.png)
+
+---
+
 ### 2. Zero payer coverage creates substantial financial exposure
 
 **Observation:** **13,586 encounters** had zero payer coverage, representing **48.7% of all encounters**. These encounters accounted for approximately **$63.1M**, or **62.2% of total claim value**.
 
 **Business Context:** Encounters without recorded coverage can increase reimbursement risk, delay collections, and create additional administrative workload for billing and patient financial services teams.
 
-**Impact:** Zero-coverage claims represent a disproportionate share of total claim value and should be treated as a revenue-cycle priority.
+**Impact:** Zero-coverage claims represent a disproportionate share of total claim value and should be treated as a revenue-cycle priority. Procedure analysis also helps separate high-volume operational workload from high-cost financial intensity.
+
+![Cost and Procedure Performance](images/cost_procedure_performance.png)
+
+---
 
 ### 3. 30-day return activity is concentrated among a small patient group
-
-**Observation:** 771 patients had a qualifying 30-day return encounter, producing 16,595 total 30-day return events. The top 10 patients generated 5,664 events, or 34.1% of all return events.
-
-**Business Context:** Repeat utilization is not evenly distributed across the patient population. A limited group of patients is responsible for a disproportionate share of return activity.
-
-**Impact:** Targeted care coordination, discharge follow-up, and case-management workflows could reduce avoidable repeat utilization more efficiently than broad interventions applied across the entire patient population.
-
-![Patient Behavior](images/patient_behavior.png)
-
-### 4. 30-day return activity is concentrated among a small patient group
 
 **Observation:** **771 patients** had a qualifying 30-day return encounter, producing **16,595 total 30-day return events**. The top 10 patients generated **5,664 events**, or **34.1%** of all return events.
 
 **Business Context:** Repeat utilization is not evenly distributed across the patient population. A limited group of patients is responsible for a disproportionate share of return activity.
 
 **Impact:** Targeted care coordination, discharge follow-up, and case-management workflows could reduce avoidable repeat utilization more efficiently than broad interventions applied across the entire patient population.
+
+![Patient Behavior](images/patient_behavior.png)
 
 ---
 
@@ -193,25 +159,26 @@ The top 10 patients accounted for **34.1% of 30-day return events**. These patie
 
 ```text
 hospital-performance-analysis/
-│
+|
 ├── README.md
-│
+|
 ├── data/
-│   ├── encounters.csv
-│   ├── patients.csv
-│   ├── payers.csv
-│   ├── procedures.csv
-│   ├── organizations.csv
-│   └── patient_readmissions.csv
-│
+|   ├── encounters.csv
+|   ├── patients.csv
+|   ├── payers.csv
+|   ├── procedures.csv
+|   ├── organizations.csv
+|   └── patient_readmissions.csv
+|
 ├── sql/
-│   └── hospital_analytics_queries.sql
-│
+|   └── hospital_analytics_queries.sql
+|
 ├── dashboard/
-│   └── hospital_performance_dashboard.pbix
-│
+|   └── hospital_performance_dashboard.pbix
+|
 └── images/
     ├── executive_overview.png
+    ├── data_model.png
     ├── encounter_trends.png
     ├── cost_procedure_performance.png
     └── patient_behavior.png
