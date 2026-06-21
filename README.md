@@ -269,4 +269,4 @@ hospital-performance-analysis/
 
 The dataset was provided through the Maven Analytics Hospital Analytics project and generated using Synthea, an open-source synthetic patient generator.
 
-**Reference:** Walonoski, J., Kramer, M., Nichols, J., et al. (2018). *Synthea: An approach, method, and software mechanism for generating synthetic patients and synthetic electronic health records.* Journal of the American Medical Informatics Association, 25(3), 230–238.
+**Reference:** Walonoski, J., Kramer, M., Nichols, J., et al. (2018). *Synthea: An approach, method, and software mechanism for generating synthetic patients and synthetic electronic health records.* Journal of the American Medical Informatics Association, 25(3), 230–238. 
