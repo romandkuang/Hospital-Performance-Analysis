@@ -1,4 +1,4 @@
-# Hospital Performance Analysis
+# Massachusetts General Hospital Operations & Financial Performance Analysis
 
 ![SQL](https://img.shields.io/badge/SQL-MySQL-4479A1?style=flat-square\&logo=mysql\&logoColor=white)
 ![Power BI](https://img.shields.io/badge/Power%20BI-Dashboard-F2C811?style=flat-square\&logo=powerbi\&logoColor=black)
