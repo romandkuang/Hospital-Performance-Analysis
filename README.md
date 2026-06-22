@@ -17,6 +17,10 @@ Using MySQL and Power BI, I developed an analytics solution that helps hospital 
 ---
 
 ## Dashboard Preview
+[View Interactive Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZjNjZGQ3ZmQtNmM5MS00Zjg1LTliYmMtNTM3YzczNDJlOTY2IiwidCI6ImYyNTUyZTQ3LTkzMTYtNDBmYy05ZjAwLTdmODU4MmMxYTFkMyIsImMiOjZ9)
+
+[Download Power BI File](dashboards/hospital_performance_report.pbix)
+
 
 ### Executive Overview
 
