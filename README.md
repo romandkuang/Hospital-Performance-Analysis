@@ -17,26 +17,42 @@ Using MySQL and Power BI, I developed an analytics solution that helps hospital 
 ---
 
 ## Dashboard Preview
-[View Interactive Power BI Dashboard](https://app.powerbi.com/view?r=eyJrIjoiZjNjZGQ3ZmQtNmM5MS00Zjg1LTliYmMtNTM3YzczNDJlOTY2IiwidCI6ImYyNTUyZTQ3LTkzMTYtNDBmYy05ZjAwLTdmODU4MmMxYTFkMyIsImMiOjZ9)
+<p align="center">
+  <a href="https://app.powerbi.com/view?r=eyJrIjoiZjNjZGQ3ZmQtNmM5MS00Zjg1LTliYmMtNTM3YzczNDJlOTY2IiwidCI6ImYyNTUyZTQ3LTkzMTYtNDBmYy05ZjAwLTdmODU4MmMxYTFkMyIsImMiOjZ9">
+    <strong>View Interactive Power BI Dashboard</strong>
+  </a>
+  &nbsp;&nbsp;|&nbsp;&nbsp;
+  <a href="dashboard/hospital_performance_dashboard.pbix">
+    <strong>Download Power BI File</strong>
+  </a>
+</p>
 
-[Download Power BI File](dashboards/hospital_performance_report.pbix)
-
+## Dashboard Preview
 
 ### Executive Overview
 
-![Executive Overview](images/executive_overview.png)
+<p align="center">
+  <img src="images/executive_overview.png" alt="Executive Overview Dashboard" width="950">
+</p>
 
 ### Encounter Trends
 
-![Encounter Trends](images/encounter_trends.png)
+<p align="center">
+  <img src="images/encounter_trends.png" alt="Encounter Trends Dashboard" width="750">
+</p>
 
 ### Cost & Procedure Performance
 
-![Cost and Procedure Performance](images/cost_procedure_performance.png)
+<p align="center">
+  <img src="images/cost_procedure_performance.png" alt="Cost and Procedure Performance Dashboard" width="950">
+</p>
 
 ### Patient Behavior
 
-![Patient Behavior](images/patient_behavior.png)
+<p align="center">
+  <img src="images/patient_behavior.png" alt="Patient Behavior Dashboard" width="850">
+</p>
+
 
 ---
 
@@ -123,7 +139,11 @@ Without centralized reporting, operational and financial risks may remain hidden
 
 ### Data Model
 
-![Data Model](images/data_model.png)
+<p align="center">
+  <img src="images/data_model.png" alt="Hospital Analytics Data Model" width="750">
+</p>
+
+
 
 ### Tables Used
 
